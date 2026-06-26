@@ -1,6 +1,10 @@
 package com.mysite.sbb;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +16,20 @@ class SbbApplicationTests {
     @Autowired
     private QuestionRepository questionRepository;
 
+    @Autowired
+    private AnswerRepository answerRepository;
+
     @Test
     void testJpa() {
-        Question q1 = new Question();
-        q1.setSubject("What is SBB?");
-        q1.setContent("I want to know about SBB.");
-        q1.setCreateDate(LocalDateTime.now());
-        this.questionRepository.save(q1);
+        Optional<Question> oq = this.questionRepository.findById(2);
+        assertTrue(oq.isPresent());
+        Question q = oq.get();
 
-        Question q2 = new Question();
-        q2.setSubject("I have question about Spring Boot Model.");
-        q2.setContent("Does ID generated automatically?");
-        q2.setCreateDate(LocalDateTime.now());
-        this.questionRepository.save(q2);
+        Answer a = new Answer();
+
+        a.setContent("네 자동으로 생성됩니다.");
+        a.setQuestion(q);
+        a.setCreateDate(LocalDateTime.now());
+        this.answerRepository.save(a);
     }
-
 }
