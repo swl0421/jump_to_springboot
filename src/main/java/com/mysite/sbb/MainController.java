@@ -9,6 +9,11 @@ public class MainController {
     @GetMapping("/sbb")
     @ResponseBody
     public String index() {
-        return "index";
+        return "Welcome to SBB!";
+    }
+
+    @GetMapping("/")
+    public String root(){
+        return "redirect:/question/list";
     }
 }
