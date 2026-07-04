@@ -32,6 +32,7 @@ public class UserController {
             bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 비밀번호가 일치하지 않습니다.");
             return "signup_form";
         }
+
         try{
             userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1());
         } catch(DataIntegrityViolationException e){
@@ -44,8 +45,11 @@ public class UserController {
             return "signup_form";
         }
 
-
-
         return "redirect:/";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login_form";
     }
 }
